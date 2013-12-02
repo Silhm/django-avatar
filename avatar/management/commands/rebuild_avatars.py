@@ -9,7 +9,8 @@ class Command(NoArgsCommand):
             "settings.AVATAR_AUTO_GENERATE_SIZES.")
 
     def handle_noargs(self, **options):
-        for avatar in Avatar.objects.all():
+        sizes = getattr(settings, 'AUTO_GENERATE_AVATAR_SIZES', (80,))
+        for avatar in sizes:
             for size in settings.AVATAR_AUTO_GENERATE_SIZES:
                 print("Rebuilding Avatar id=%s at size %s." % (avatar.id, size))
                 avatar.create_thumbnail(size)
